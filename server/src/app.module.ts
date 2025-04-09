@@ -14,17 +14,15 @@ import { Reservation } from './reservation/entity/reservation.entity';
   imports: [UserModule,ConfigModule.forRoot(), AuthModule, MoviesModule, ReservationModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'Azerty123',
-      database: 'MoviieBooker',
+      host: process.env.DATABASE_URL,
+      port: Number(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       // ssl: {
-      //   rejectUnauthorized: false, // Required for Render's SSL setup
+      //   rejectUnauthorized: false,
       // },
-      entities: [User,Reservation], // Path to entities
-      // migrations: ["src/migration/**/*.ts"], // Path to migrations
-      // subscribers: ["src/subscriber/**/*.ts"], // Path to subscriber
+      entities: [User,Reservation],
       synchronize: true,
       logging: true,
     }),
