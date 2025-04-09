@@ -6,6 +6,7 @@ import { User } from './entity/user.entity';
 import {AuthService} from '../auth/auth.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/LoginDto';
+import { Reservation } from 'src/reservation/entity/reservation.entity';
 
 @Injectable()
 export class UserService {

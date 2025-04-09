@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
         JwtModule.register({
         global: true,
         secret: "Azerty123",
-        signOptions: { expiresIn: '60s' },
+        signOptions: { expiresIn: '7200s' },
         }),
     ],
     providers: [AuthService],

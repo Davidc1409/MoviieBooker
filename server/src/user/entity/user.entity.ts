@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Reservation } from 'src/reservation/entity/reservation.entity';
+import { Entity, Column, PrimaryGeneratedColumn, Unique, OneToMany } from 'typeorm';
 
 @Entity()
 @Unique(["email"])
@@ -20,4 +21,7 @@ export class User {
 
   @Column({ type: 'int'})
   age: number;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.user)
+    reservations: Reservation[]
 }

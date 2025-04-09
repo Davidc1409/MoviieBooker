@@ -23,6 +23,5 @@ export class MoviesController {
                 return axiosResponse.data;
             })
         );
-        
     }
 }

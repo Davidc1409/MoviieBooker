@@ -14,6 +14,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     const payload = {
+      id: user.id,
       firstname : user.firstname,
       lastname : user.lastname,
       email : user.email,
@@ -21,5 +22,20 @@ export class AuthService {
     };
     const token = this.JwtService.signAsync(payload);
     return token;
+  }
+
+  async getUserFromToken(token: string){
+    try {
+      const payload = await this.JwtService.verifyAsync(
+        token,
+        {
+          secret: process.env.SECRET
+        }
+      );
+      // console.log(payload);
+      return payload;
+    } catch(error) {
+      throw new Error(error);
+    }
   }
 }
