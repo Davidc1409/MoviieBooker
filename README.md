@@ -26,7 +26,7 @@ Développer un système de réservation de films avec les fonctionnalités suiva
 1. Clonez le dépôt :
    ```bash
    git clone https://github.com/Davidc1409/MoviieBooker.git
-   cd votre-projet
+   cd ./server
    ```
 
 2. Installez les dépendances :
