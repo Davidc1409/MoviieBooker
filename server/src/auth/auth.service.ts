@@ -32,10 +32,9 @@ export class AuthService {
           secret: process.env.SECRET
         }
       );
-      // console.log(payload);
       return payload;
     } catch(error) {
-      throw new Error(error);
+      return new Error(error);
     }
   }
 }

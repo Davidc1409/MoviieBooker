@@ -6,7 +6,6 @@ import { User } from './entity/user.entity';
 import {AuthService} from '../auth/auth.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/LoginDto';
-import { Reservation } from 'src/reservation/entity/reservation.entity';
 
 @Injectable()
 export class UserService {
@@ -50,7 +49,12 @@ export class UserService {
     }
 
     findByEmail(email : string):Promise<User| null>  {
-        return this.userRepository.findOneBy({email})
+        try{
+            return this.userRepository.findOneBy({email})
+        }
+        catch(e){
+            return Promise.reject(e);
+        }
     }
 
 }

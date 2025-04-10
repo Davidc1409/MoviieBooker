@@ -2,7 +2,6 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { Reservation } from './entity/reservation.entity';
-import { AuthService } from 'src/auth/auth.service';
 import { User } from 'src/user/entity/user.entity';
 
 
@@ -10,20 +9,28 @@ import { User } from 'src/user/entity/user.entity';
 export class ReservationService {
     constructor(
             @InjectRepository(Reservation)
-            private reservationRepository: Repository<Reservation>,
-            private authService : AuthService
+            private reservationRepository: Repository<Reservation>
         ) {}
 
     async getReservationsByUserId (user : User): Promise<Reservation[]>{
-        const validUser = new User();
-        validUser.id = user.id;
-        return this.reservationRepository.findBy({user : validUser});
+        try{
+            const validUser = new User();
+            validUser.id = user.id;
+            return this.reservationRepository.findBy({user : validUser});
+        }
+        catch(e){
+            return Promise.reject(e);
+        }
     }
 
     async createReservation(user : User, movieId : number, startTime : Date) : Promise<Reservation>{
         try {
             const currentReservations = await this.getReservationsByUserId(user);
             const currentReservationStartTime = new Date(startTime).getTime();
+            if(Number.isNaN(currentReservationStartTime)){
+                throw new BadRequestException("Invalid Date");
+            }
+            console.log(currentReservationStartTime);
             const currentReservationEndTime = currentReservationStartTime + 7200000;
             currentReservations.map((reservation)=>{
                 if( currentReservationStartTime >= reservation.startTime.getTime() && currentReservationStartTime <= reservation.endTime.getTime()){
@@ -38,7 +45,6 @@ export class ReservationService {
             return this.reservationRepository.save(reservation);
         }
         catch(e){
-            console.log(e)
             return Promise.reject(e);
         }
     }
