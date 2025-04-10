@@ -8,8 +8,7 @@ import { ApiTags, ApiBody } from '@nestjs/swagger';
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-    constructor(private readonly userService: UserService) {}
-
+    constructor(private userService: UserService) {}
 
     @ApiBody({
         type: RegisterDto,
@@ -48,16 +47,4 @@ export class UserController {
     login(@Body() loginDto: LoginDto): Promise<string> {
         return this.userService.login(loginDto);
     }
-
 }
-
-
-// examples: {
-//     user1: {
-//       summary: 'Exemple d'utilisateur',
-//       value: {
-//         username: 'john_doe',
-//         password: 'securepassword123',
-//       },
-//     },
-//   },
