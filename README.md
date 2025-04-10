@@ -49,7 +49,7 @@ Développer un système de réservation de films avec les fonctionnalités suiva
 
 4. Démarrez l'application :
    ```bash
-   npm run start
+   npm run start:dev
    ```
 
 ## Utilisation
