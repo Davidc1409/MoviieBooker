@@ -91,4 +91,3 @@ Les contributions sont les bienvenues ! Veuillez soumettre une pull request ou o
 
 Ce projet est sous licence MIT. Voir le lien LICENSE pour plus de détails.
 https://mit-license.org/
-```
