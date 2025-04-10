@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { Reservation } from './entity/reservation.entity';
@@ -49,8 +49,14 @@ export class ReservationService {
         }
     }
 
-    async deleteReservation(id : number): Promise<DeleteResult>{
+    async deleteReservation(id : number, user: User): Promise<DeleteResult>{
         try{
+            const currentUser = new User();
+            currentUser.id = user.id;
+            const reservationToDelete = await this.reservationRepository.findOneBy({id:id,user:currentUser});
+            if(!reservationToDelete){
+                throw new BadRequestException("Unauthorized deletion");
+            }
             return this.reservationRepository.delete(id);
         }   
         catch(e){

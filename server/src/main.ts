@@ -11,6 +11,18 @@ async function bootstrap() {
     .setDescription('The moviie booker API')
     .setVersion('1.0')
     .addTag('moviies')
+    .addBearerAuth(
+      {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+        name: "Authorization",
+        description: "Enter JWT token",
+        in: "header",
+      },
+      "Bearer",
+    )
+    .addSecurityRequirements("Bearer")
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
